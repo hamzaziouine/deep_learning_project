@@ -1,0 +1,7 @@
+# 1. Introduction
+
+Les systèmes multi-agents en intelligence artificielle représentent un paradigme fondamental pour automatiser les tâches complexes qui exigent coordination, spécialisation et prise de décision distribuée. Dans le contexte de l'intelligence économique, où l'analyse simultanée d'informations disparates (sentiment client, positionnement concurrent, tendances de marché) s'avère indispensable, les architectures multi-agents offrent une solution élégante et scalable.
+
+Ce projet, réalisé dans le cadre du module Projet Intégré S8 — Intelligence Artificielle et Big Data à l'Université Internationale de Rabat, sur une durée de quatre semaines sous la direction du professeur Hakim Hafidi, propose la conception et l'implémentation d'un système multi-agent capable de générer des rapports d'intelligence de marché pour une niche de produits donnée. Le système combine un modèle de deep learning fin-tuné pour l'analyse de sentiment, un agent de recherche de marché interrogeant le web, et un orchestrateur implicite assurant coordination et synthèse.
+
+Le présent rapport documente l'intégralité de la démarche : présentation de l'architecture multi-agent retenue, modèles de deep learning employés, implémentation des agents et outils, mécanisme humain-en-boucle pour validation, stratégie de gestion des erreurs et journalisation structurée, résultats de validation, et limitations honnêtes. Les sections suivantes détaillent chacune de ces composantes.

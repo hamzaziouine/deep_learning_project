@@ -1,0 +1,103 @@
+@startuml class_diagram
+' Class diagram — Multi-Agent Product Review Intelligence
+' Shows the agents, tools, and shared utilities.
+
+skinparam backgroundColor #FAFAFA
+skinparam class {
+  BackgroundColor #EAF5FF
+  BorderColor #1F77B4
+}
+skinparam package {
+  BackgroundColor #F5F5F5
+  BorderColor #888888
+}
+
+package "src.agents" {
+  class MarketResearcher <<factory>> {
+    +build_market_researcher(llm) : Agent
+  }
+  class SentimentAnalyst <<factory>> {
+    +build_sentiment_analyst(llm) : Agent
+  }
+  class Manager <<factory>> {
+    +build_manager(llm) : Agent
+  }
+}
+
+package "src.tools" {
+  class WebSearchTool {
+    -_MIN_INTERVAL_S : float
+    -_BACKOFF_DELAYS : tuple
+    -_agent_logger : AgentLogger
+    +set_logger(logger)
+    +search_market(query : str) : dict
+  }
+  class SentimentTool {
+    -_tokenizer : AutoTokenizer
+    -_model : AutoModelForSequenceClassification
+    -_device : str
+    -_CONFIDENCE_THRESHOLD : float
+    -_logger : AgentLogger
+    +set_logger(logger)
+    +analyze_sentiment(review_text : str) : dict
+    -_load_model() : (tokenizer, model)
+  }
+  class ReviewLoaderTool {
+    -_DEFAULT_CSV : str
+    -_agent_logger : AgentLogger
+    +set_logger(logger)
+    +load_product_reviews(category : str, max_reviews : int) : dict
+    -_resolve_data_path() : str
+  }
+}
+
+package "src.utils" {
+  class AgentLogger {
+    -log_path : Path
+    -lock : threading.Lock
+    -run_id : str
+    +crew_start(niche, config)
+    +task_delegated(task_description, assigned_agent)
+    +tool_called(tool_name, input_data, output_data, duration_ms, agent)
+    +tool_error(tool_name, input_data, error_message, agent)
+    +hitl_checkpoint(summary, user_feedback)
+    +agent_response(agent, task_description, output, duration_ms)
+    +report_generated(report_path, word_count)
+    +crew_complete(total_duration_ms, status)
+  }
+}
+
+package "src.models" {
+  class TrainModule <<module>> {
+    +train_model(config) : dict
+    +WeightedTrainer(Trainer)
+  }
+  class EvaluateModule <<module>> {
+    +evaluate(model_dir) : dict
+  }
+  class PredictModule <<module>> {
+    -_model, _tokenizer, _device
+    +predict_sentiment(text) : dict
+  }
+}
+
+package "src.main" {
+  class MainPipeline {
+    +run_market_intelligence_crew(niche, category) : str
+    +run_smoke_crew() : object
+    +_validate_gemini_key() : bool
+  }
+}
+
+MainPipeline ..> MarketResearcher : builds
+MainPipeline ..> SentimentAnalyst : builds
+MainPipeline ..> Manager : builds
+MarketResearcher --> WebSearchTool : tools=[]
+SentimentAnalyst --> ReviewLoaderTool : tools=[]
+SentimentAnalyst --> SentimentTool : tools=[]
+WebSearchTool --> AgentLogger : logs into
+SentimentTool --> AgentLogger : logs into
+ReviewLoaderTool --> AgentLogger : logs into
+SentimentTool ..> PredictModule : optional GPU-aware load
+TrainModule ..> EvaluateModule : produces checkpoint
+@enduml

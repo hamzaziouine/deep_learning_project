@@ -1,0 +1,65 @@
+@startuml sequence_hitl
+' Sequence diagram — HITL checkpoint detail
+
+skinparam backgroundColor #FAFAFA
+skinparam sequence {
+  ParticipantBackgroundColor #EAF5FF
+  ParticipantBorderColor #1F77B4
+  ActorBackgroundColor #FFF7E6
+  ActorBorderColor #D2691E
+}
+
+actor "Utilisateur\n(reviewer humain)" as User
+participant "Manager\nAgent" as Mgr
+participant "Synthesis\nTask" as Task
+participant "CrewAI\nFramework" as Crew
+participant "Gemini 2.5\nFlash" as LLM
+participant "AgentLogger" as Log
+
+== Pré-conditions ==
+note over Task
+  Le manager a déjà reçu :
+  - market_research output
+  - sentiment_analysis output
+  La tâche de synthèse est marquée
+  human_input=True dans tasks.yaml.
+end note
+
+Mgr -> Task : execute synthesis_task
+activate Task
+Task -> LLM : compose draft\n(5 sections, 300-500 mots)
+LLM --> Task : draft Markdown report
+
+Task -> Crew : task complete with\nhuman_input=True flag
+Crew -> User : print(draft)\nprompt: "Anything to add or change?"
+note right of User
+  L'utilisateur scanne :
+  ## 1. Niche Summary
+  ## 2. Top Competitors
+  ## 3. Sentiment Breakdown
+  ## 4. Key Pain Points
+  ## 5. Opportunity Recommendation
+end note
+
+alt utilisateur approuve (entrée vide ou "approve")
+  User --> Crew : "" / "approve" / "looks good"
+  Crew -> Log : hitl_checkpoint(summary=draft,\n                  user_feedback="approved")
+  Crew --> Task : finalize (no revision)
+else utilisateur fournit du feedback
+  User --> Crew : "Lower the price range estimate;\nadd a 6th section on regulatory risks"
+  Crew -> Log : hitl_checkpoint(summary=draft,\n                  user_feedback="<feedback>")
+  Crew -> LLM : revise draft per feedback
+  LLM --> Crew : revised Markdown report
+  Crew --> Task : finalize (revised)
+end
+
+Task --> Mgr : final report
+deactivate Task
+
+== Post-conditions ==
+note over Mgr
+  Le manager retourne le rapport
+  validé. main.py l'écrit dans
+  outputs/<niche>_<timestamp>.md.
+end note
+@enduml

@@ -1,0 +1,41 @@
+# Reproducibility — keep image small, exclude local artifacts
+.venv/
+.venv-spike/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Trained model — must be volume-mounted (size + secrets)
+models/sentiment_distilbert/*
+models/sentiment_roberta/*
+models/sentiment_roberta_weighted/*
+!models/**/.gitkeep
+
+# Raw data + large processed CSVs (split_indices.json is included in COPY)
+data/raw/*
+data/processed/train.csv
+data/processed/val.csv
+data/processed/test.csv
+data/processed/dataset_stats.md
+
+# Local logs and outputs
+logs/*
+outputs/*
+docs/training_log*.txt
+
+# Secrets and editor metadata
+.env
+.env.local
+.git/
+.github/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Reports + diagrams (rebuilt outside the runtime container)
+report/
+notebooks/

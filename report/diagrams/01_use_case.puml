@@ -1,0 +1,46 @@
+@startuml use_case
+' Use Case diagram — Multi-Agent Product Review Intelligence
+' Render: plantuml -tpng 01_use_case.puml
+
+skinparam backgroundColor #FAFAFA
+skinparam usecase {
+  BackgroundColor #EAF5FF
+  BorderColor #1F77B4
+}
+skinparam actor {
+  BackgroundColor #FFF7E6
+  BorderColor #D2691E
+}
+left to right direction
+
+actor "Utilisateur\n(Analyste produit)" as user
+actor "API Gemini\n(LLM externe)" as gemini
+actor "DuckDuckGo\n(API externe)" as ddg
+actor "Dataset Amazon Reviews\n(stockage local)" as data
+
+rectangle "Système Multi-Agents — Product Review Intelligence" {
+  usecase "UC1: Lancer une\nanalyse de niche" as UC1
+  usecase "UC2: Spécifier\nla niche et la catégorie" as UC2
+  usecase "UC3: Cartographier\nla concurrence" as UC3
+  usecase "UC4: Analyser\nle sentiment client" as UC4
+  usecase "UC5: Valider la\nsynthèse (HITL)" as UC5
+  usecase "UC6: Recevoir le\nrapport final" as UC6
+  usecase "UC7: Consulter\nle journal JSONL" as UC7
+}
+
+user --> UC1
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC3 : <<include>>
+UC1 ..> UC4 : <<include>>
+UC3 ..> UC5 : <<extend>>
+UC4 ..> UC5 : <<extend>>
+UC5 --> UC6
+user --> UC5
+user --> UC7
+
+UC3 --> ddg : recherche web
+UC3 --> gemini : raisonnement
+UC4 --> data : chargement avis
+UC4 --> gemini : raisonnement
+UC5 --> gemini : synthèse
+@enduml

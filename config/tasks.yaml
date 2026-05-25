@@ -1,0 +1,83 @@
+# Task definitions for the hierarchical crew.
+# {niche} is interpolated by src/main.py before kickoff.
+
+market_research_task:
+  description: >
+    Map the competitive landscape for the niche "{niche}". Identify 3 to 5 prominent
+    competitors (brands or specific product lines), their approximate price range
+    (min-max in USD when possible), and 2 to 3 recent trends or talking points
+    (innovations, controversies, market movements). Use the search_market tool. If the
+    search tool is rate-limited or returns sparse results, document the limitation
+    explicitly rather than inventing data.
+  expected_output: >
+    A Markdown section with three subsections:
+
+    ### Competitors
+    - Brand or product name | URL | one-line positioning | price range
+
+    ### Price Range
+    Overall observed range across competitors (USD).
+
+    ### Recent Trends
+    Bullet list of 2-3 trends.
+
+    Total length: 200-400 words.
+  agent: market_researcher
+
+sentiment_analysis_task:
+  description: >
+    For the niche "{niche}", load AT MOST 10 product reviews from the dataset
+    (max_reviews=10 to respect Gemini free-tier quota) and classify each review
+    with the analyze_sentiment tool. Produce an aggregated view of customer
+    sentiment based on those 10 reviews. The category name in the dataset that
+    maps to "{niche}" is "{category}". DO NOT call load_product_reviews with
+    max_reviews > 10 under any circumstance.
+  expected_output: >
+    A Markdown section with these subsections:
+
+    ### Distribution
+    - Total reviews analyzed: N
+    - POSITIVE: count (percentage)
+    - NEUTRAL: count (percentage)
+    - NEGATIVE: count (percentage)
+    - UNCERTAIN (low confidence): count (percentage)
+
+    ### Top Recurring Complaints (from NEGATIVE reviews)
+    Three short bullets.
+
+    ### Top Recurring Praises (from POSITIVE reviews)
+    Three short bullets.
+
+    Total length: 200-400 words.
+  agent: sentiment_analyst
+  context_tasks:
+    - market_research_task
+
+synthesis_task:
+  description: >
+    Synthesize the Market Research Analyst's competitive landscape and the Customer
+    Sentiment Analyst's review aggregation into a single Markdown report on the niche
+    "{niche}". The report must be a faithful integration — do not introduce facts that
+    were not produced by either analyst. Highlight a clear opportunity recommendation
+    based on the convergence of competitive gaps and unmet customer needs.
+  expected_output: >
+    A Markdown report with exactly these sections:
+
+    ## 1. Niche Summary
+    Two to three sentences describing the niche.
+
+    ## 2. Top Competitors
+    Bullet list (name, URL, positioning, price band).
+
+    ## 3. Sentiment Breakdown
+    Markdown table: sentiment | count | percentage.
+
+    ## 4. Key Pain Points
+    Top 3 from negative reviews (use the analyst's findings).
+
+    ## 5. Opportunity Recommendation
+    One paragraph, 3-5 sentences. Concrete and actionable.
+
+    Total length: 300-500 words.
+  agent: manager
+  human_input: true

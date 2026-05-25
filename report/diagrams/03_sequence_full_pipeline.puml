@@ -1,0 +1,88 @@
+@startuml sequence_full_pipeline
+' Sequence diagram — full multi-agent pipeline run
+
+skinparam backgroundColor #FAFAFA
+skinparam sequence {
+  ParticipantBackgroundColor #EAF5FF
+  ParticipantBorderColor #1F77B4
+  ActorBackgroundColor #FFF7E6
+  ActorBorderColor #D2691E
+}
+
+actor User
+participant "main.py" as Main
+participant "Manager\nAgent" as Mgr
+participant "Market Research\nAgent" as MR
+participant "Sentiment Analyst\nAgent" as SA
+participant "AgentLogger" as Log
+participant "DuckDuckGo" as DDG
+participant "RoBERTa\n(sentiment model)" as DL
+note over DL: DistilBERT used as ablation baseline
+database "Amazon\nReviews CSV" as CSV
+participant "Gemini 2.5 Flash" as Gemini
+
+User -> Main : python -m src.main\n--niche "wireless earbuds"
+activate Main
+Main -> Main : load_dotenv() + sync\nGEMINI_API_KEY/GOOGLE_API_KEY
+Main -> Main : LITELLM_CACHE=disk
+Main -> Log : crew_start(niche, config)
+Main -> Mgr : Crew.kickoff()\n(Process.hierarchical)
+activate Mgr
+
+Mgr -> Gemini : plan delegation
+Gemini --> Mgr : delegate market_research_task
+
+Mgr -> MR : execute market_research_task
+activate MR
+MR -> Gemini : reason about query
+Gemini --> MR : tool call: search_market("wireless earbuds market 2026")
+MR -> DDG : DDGS().text(query)
+DDG --> MR : list of {title, url, snippet}
+MR -> Log : tool_called("search_market", ...)
+MR -> Gemini : aggregate snippets into sections
+Gemini --> MR : Markdown competitor + price + trends
+MR --> Mgr : market_research output (Markdown)
+Log <-- MR : agent_response
+deactivate MR
+
+Mgr -> SA : execute sentiment_analysis_task\n(context = market output)
+activate SA
+SA -> Gemini : reason
+Gemini --> SA : tool call: load_product_reviews("Electronics", 50)
+SA -> CSV : pandas read_csv
+CSV --> SA : 50 reviews
+SA -> Log : tool_called("load_product_reviews", ...)
+loop for each review
+  SA -> Gemini : tool call: analyze_sentiment(text)
+  SA -> DL : tokenize → forward → softmax
+  DL --> SA : {sentiment, confidence, scores}
+  SA -> Log : tool_called("analyze_sentiment", ...)
+end
+SA -> Gemini : aggregate distribution + themes
+Gemini --> SA : Markdown summary
+SA --> Mgr : sentiment_analysis output
+Log <-- SA : agent_response
+deactivate SA
+
+Mgr -> Gemini : compose synthesis (uses both outputs)
+Gemini --> Mgr : draft report (5 sections)
+
+note right of Mgr
+  HITL checkpoint
+  (human_input=True)
+end note
+Mgr -> User : show draft report\nrequest input
+User --> Mgr : "approve" or feedback
+Mgr -> Log : hitl_checkpoint(summary, feedback)
+opt user provided feedback
+  Mgr -> Gemini : revise per feedback
+  Gemini --> Mgr : revised report
+end
+
+Mgr --> Main : final report (Markdown)
+deactivate Mgr
+Main -> Main : write outputs/<niche>_<ts>.md
+Main -> Log : report_generated + crew_complete
+Main --> User : "Report saved to outputs/..."
+deactivate Main
+@enduml

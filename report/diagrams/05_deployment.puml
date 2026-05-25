@@ -1,0 +1,59 @@
+@startuml deployment
+' Deployment diagram — local execution architecture
+
+skinparam backgroundColor #FAFAFA
+skinparam node {
+  BackgroundColor #EAF5FF
+  BorderColor #1F77B4
+}
+skinparam database {
+  BackgroundColor #F0FFF0
+  BorderColor #2E8B57
+}
+skinparam cloud {
+  BackgroundColor #FFF7E6
+  BorderColor #D2691E
+}
+
+node "Poste de développement\nWindows 11 + WSL Bash + Git Bash" as Host {
+  node "Python 3.11 venv\n(.venv/)" as Venv {
+    component "src.main\n(CLI entrypoint)" as Main
+    component "CrewAI 1.14.4\n(orchestration)" as Crew
+    component "Transformers + PyTorch 2.6\n+ CUDA 12.4 (FP16)" as DL
+    component "duckduckgo-search 8.x" as DDGS
+    component "litellm (disk cache)" as LiteLLM
+  }
+  node "GPU NVIDIA RTX 3060 6GB" as GPU {
+    artifact "RoBERTa-base\nfine-tuned\n(model.safetensors\n+ tokenizer)" as ModelArt
+  }
+  database "Disque local" as Disk {
+    folder "data/processed/\n(train/val/test CSVs,\ngitignored)" as DataFolder
+    folder "models/sentiment_roberta/" as ModelFolder
+    folder "logs/agent_*.jsonl" as LogFolder
+    folder "outputs/<niche>_*.md" as OutFolder
+  }
+}
+
+cloud "Internet" {
+  cloud "Google AI Studio API" as Gemini {
+    component "gemini-2.5-flash\n(20 req/day free tier)" as GMod
+  }
+  cloud "DuckDuckGo Lite" as DDG
+  cloud "HuggingFace Hub" as HF {
+    component "roberta-base\n(pre-trained weights,\ntéléchargement initial)" as HFW
+  }
+}
+
+Main --> Crew : kickoff()
+Crew --> LiteLLM : LLM calls
+LiteLLM --> GMod : HTTPS (cached)
+Crew --> DDGS : search_market
+DDGS --> DDG : HTTPS
+DL --> GPU : tensor ops (FP16)
+GPU --> ModelArt : load weights
+ModelArt --> ModelFolder : persist
+Main --> DataFolder : pandas.read_csv
+Main --> LogFolder : JSONL append
+Main --> OutFolder : write report
+DL ..> HFW : initial download\n(once)
+@enduml

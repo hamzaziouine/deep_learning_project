@@ -1,0 +1,100 @@
+text,rating,helpful_votes,verified,category
+"Great battery life on these earbuds, lasted 8 hours easily.",5,12,True,Electronics
+"Connection drops randomly after 10 minutes of use, very frustrating.",2,8,True,Electronics
+"Sound quality is excellent for the price, clear highs and deep bass.",5,22,True,Electronics
+"Stopped charging after two weeks. Complete waste of money.",1,31,True,Electronics
+"Comfortable fit, wore them for 3 hours with no discomfort.",4,5,True,Electronics
+"The noise cancellation works surprisingly well on flights.",5,18,True,Electronics
+"Instructions are unclear and setup took forever.",2,4,True,Electronics
+"Pairs instantly with my phone every time, no fuss.",5,9,True,Electronics
+"Volume is too low even at max, cannot use outdoors.",2,6,True,Electronics
+"Solid build quality, feels premium despite the low price.",4,14,True,Electronics
+"Left earbud died after one month, right one still works.",1,27,True,Electronics
+"Perfect for gym sessions, stayed in my ears the whole workout.",5,11,True,Electronics
+"Microphone quality is poor for calls, people cannot hear me well.",2,7,False,Electronics
+"Battery lasts about 6 hours which is fine for commuting.",4,3,True,Electronics
+"Charging case is slim and fits in my pocket easily.",4,8,True,Electronics
+"Audio cuts out whenever I move my phone more than 2 meters away.",1,19,True,Electronics
+"Surprisingly good bass response for such small drivers.",4,10,True,Electronics
+"The touch controls are too sensitive, keeps pausing my music.",2,13,True,Electronics
+"Great value for money, sounds as good as earbuds costing twice as much.",5,25,True,Electronics
+"Ear tips fall out constantly, had to buy replacement tips.",2,9,True,Electronics
+"Excellent for podcasts and audiobooks, very clear voice reproduction.",5,6,True,Electronics
+"Bluetooth range is around 8 meters before signal degrades.",3,2,True,Electronics
+"Charging case cracked after dropping it once from desk height.",1,16,False,Electronics
+"Auto-pause when I remove them from ears is a great feature.",4,7,True,Electronics
+"The app is buggy and crashes on Android, but earbuds work fine.",3,4,True,Electronics
+"Absolute top-tier sound quality, rivals headphones at 3x the price.",5,33,True,Electronics
+"IPX4 rating holds up, used them in rain without any issues.",5,15,True,Electronics
+"Charging takes 2 hours for only 5 hours of playback, disappointing.",2,11,True,Electronics
+"Fit is snug and secure, suitable for running without adjustment.",5,8,True,Electronics
+"The companion app is polished and has EQ options that actually work.",4,17,True,Electronics
+"Only one earbud connects at a time, the other keeps disconnecting.",1,29,True,Electronics
+"Decent mid-range sound, nothing exceptional but solid performer.",3,5,True,Electronics
+"Light enough to forget I am wearing them during long meetings.",5,12,True,Electronics
+"Latency is noticeable when watching videos, audio is out of sync.",2,20,True,Electronics
+"Best purchase I made this year, highly recommend to anyone.",5,41,True,Electronics
+"The carrying case does not snap shut properly, very annoying.",2,6,True,Electronics
+"Good bass without being overpowering, well-balanced overall.",4,9,True,Electronics
+"Warranty process was painless, replacement unit arrived in 3 days.",5,14,True,Electronics
+"Buttons are stiff and hard to press while wearing them.",2,8,True,Electronics
+"Crystal clear call quality, colleagues said I sounded great.",5,10,True,Electronics
+"Earbud fell out during a run and I lost it, design flaw.",1,24,True,Electronics
+"Charging case doubles as a power bank, clever design.",4,18,True,Electronics
+"Sound profile is too bass-heavy for my taste, muddy at high volume.",2,7,False,Electronics
+"Pairing with two devices simultaneously works flawlessly.",5,11,True,Electronics
+"The ear hooks included are comfortable and keep them secure.",4,6,True,Electronics
+"Dead on arrival, neither earbud powers on despite full charge.",1,35,True,Electronics
+"Ambient mode lets me hear traffic while listening, very useful.",5,9,True,Electronics
+"Treble is too harsh, gets fatiguing after 30 minutes.",2,13,True,Electronics
+"Sleep timer in the app is a feature I did not expect, love it.",4,7,True,Electronics
+"Build feels plastic and cheap, does not inspire confidence.",2,5,True,Electronics
+"Outstanding noise cancellation, completely drowns out office noise.",5,28,True,Electronics
+"These are my third pair of earbuds and by far the best.",5,16,True,Electronics
+"The in-ear detection sensor stopped working after a week.",2,10,True,Electronics
+"Case hinge broke within a month, poor quality control.",1,22,True,Electronics
+"Good option for people who want reliable earbuds at this price.",4,4,True,Electronics
+"Both earbuds connect simultaneously, no annoying primary/secondary setup.",5,7,True,Electronics
+"Sound is muffled compared to my old wired earphones.",2,8,True,Electronics
+"Compact case easily fits in a shirt pocket.",4,5,True,Electronics
+"Truly wireless experience with zero dropouts in two months of use.",5,19,True,Electronics
+"The on-ear detection is sensitive enough to actually be useful.",4,11,True,Electronics
+"Useless below 10 degrees Celsius, battery drains in under an hour.",1,26,True,Electronics
+"Warm sound signature that works well for jazz and classical.",4,8,True,Electronics
+"Firmware update bricked one earbud, had to factory reset.",2,14,True,Electronics
+"Great everyday earbuds, not audiophile grade but very usable.",4,6,True,Electronics
+"Comes with three sizes of ear tips, found a perfect fit quickly.",5,9,True,Electronics
+"Stopped recognizing the charging case after a month.",1,21,True,Electronics
+"Very comfortable for long sessions, forget they are there.",5,13,True,Electronics
+"Sound isolation is mediocre, outdoor noise bleeds through easily.",2,7,True,Electronics
+"App allows custom EQ and I tuned them to my preference in minutes.",4,10,True,Electronics
+"Returned them the next day, sound quality is terrible for the price.",1,18,True,Electronics
+"Strong recommendation for commuters who need reliable earbuds.",5,15,True,Electronics
+"Charging port gets loose over time, intermittent connection issues.",2,9,True,Electronics
+"The touch-sensitive controls work 9 out of 10 times reliably.",4,6,True,Electronics
+"Impressive spatial audio for movies, adds real depth.",5,20,True,Electronics
+"Plastic finish scratches very easily, looks worn within weeks.",2,4,False,Electronics
+"Multi-point connection to laptop and phone works perfectly.",4,12,True,Electronics
+"Unboxing experience is excellent, well-packaged and presented.",3,2,True,Electronics
+"Battery life drops significantly in cold weather outdoors.",2,8,True,Electronics
+"Best earbuds under $50, nothing else comes close at this price.",5,32,True,Electronics
+"Sound is tinny and lacks depth, not suitable for music lovers.",1,17,True,Electronics
+"Good for calls, not great for music, know what you are buying.",3,6,True,Electronics
+"Earbud placement in case is intuitive, charges every time.",4,7,True,Electronics
+"Ran a half marathon with these, stayed in ears the entire time.",5,24,True,Electronics
+"Bass is muddy and overwhelms the mids at high volumes.",2,10,True,Electronics
+"Lightweight design means no ear fatigue even after 4 hours.",5,11,True,Electronics
+"Range of 10 meters through walls is better than competitors.",4,8,True,Electronics
+"One earbud randomly resets mid-listening session.",2,15,True,Electronics
+"Excellent product backed by responsive customer support.",5,9,True,Electronics
+"The mute function during calls works without delay.",4,6,True,Electronics
+"Packaging was eco-friendly which I appreciate.",3,3,True,Electronics
+"Takes 10 minutes just to pair for the first time, confusing.",2,7,True,Electronics
+"Volume memory feature remembers level per device, very handy.",4,10,True,Electronics
+"Highly durable, survived a spin in the washing machine intact.",5,29,True,Electronics
+"Low-latency mode reduces gaming delay noticeably.",4,12,True,Electronics
+"Definitely not waterproof despite the IPX4 rating on the box.",1,23,True,Electronics
+"Lightweight moisturizer absorbed instantly, no greasy residue.",5,8,True,Beauty
+"Foundation matches my skin tone better than anything I've tried.",4,14,True,Beauty
+"Serum caused a breakout on my sensitive skin within two days.",1,11,True,Beauty
+"Lipstick stays on for 6 hours without touch-ups, impressive.",5,19,True,Beauty
